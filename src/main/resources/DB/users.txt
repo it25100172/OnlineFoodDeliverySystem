@@ -1,0 +1,5 @@
+C1,customer@gmail.com,123,CUSTOMER
+D1,anuhasfer2004@gmail.com,123,DELIVERY
+C2,anuhasfer2004@gmail.com,321,CUSTOMER
+R1,anuhasfer2004@gmail.com,222,RESTAURANT
+C3,shit@gmail.com,123,CUSTOMER

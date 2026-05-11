@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FoodExpress Login</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:#f4f6f9;
+        }
+
+        .login-box{
+
+            width:350px;
+            background:white;
+            padding:35px;
+            border-radius:15px;
+            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+
+        }
+
+        .login-box h2{
+
+            text-align:center;
+            margin-bottom:25px;
+            color:#ff5722;
+
+        }
+
+        .input-box{
+
+            margin-top:15px;
+
+        }
+
+        .input-box label{
+
+            display:block;
+            margin-bottom:5px;
+            font-weight:bold;
+
+        }
+
+        .input-box input{
+
+            width:100%;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:8px;
+            font-size:15px;
+
+        }
+
+        .login-btn{
+
+            width:100%;
+            padding:12px;
+            margin-top:25px;
+            border:none;
+            background:#ff5722;
+            color:white;
+            border-radius:8px;
+            font-size:16px;
+            cursor:pointer;
+
+        }
+
+        .login-btn:hover{
+
+            background:#e64a19;
+
+        }
+
+        .register-link{
+
+            text-align:center;
+            margin-top:20px;
+
+        }
+
+        .register-link a{
+
+            color:#ff5722;
+            text-decoration:none;
+            font-weight:bold;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="login-box">
+
+    <h2>FoodExpress Login</h2>
+
+    <form action="/login" method="post">
+
+        <div class="input-box">
+
+            <label>Email</label>
+
+            <input type="email"
+                   name="email"
+                   placeholder="Enter Email"
+                   required>
+
+        </div>
+
+        <div class="input-box">
+
+            <label>Password</label>
+
+            <input type="password"
+                   name="password"
+                   placeholder="Enter Password"
+                   required>
+
+        </div>
+
+        <button type="submit"
+                class="login-btn">
+
+            Login
+
+        </button>
+        <p id="errorMessage"
+           style="
+      color:red;
+      margin-top:15px;
+      display:none;
+   ">
+
+            Wrong email or password
+
+        </p>
+
+    </form>
+
+    <div class="register-link">
+
+        Don't have an account?
+        <a href="/register">
+            Register
+        </a>
+
+    </div>
+
+</div>
+<script>
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    if(params.get("error")){
+
+        document.getElementById(
+            "errorMessage"
+        ).style.display = "block";
+    }
+
+</script>
+
+</body>
+</html>

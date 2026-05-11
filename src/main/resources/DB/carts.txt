@@ -1,0 +1,5 @@
+C1,Chicken Submarine,1500.00,R2
+C1,Coca Cola,500.00,R2
+C1,Fried Rice,1800.00,R1
+C3,Cheese Burger,1200.00,R1
+C3,Pizza,2500.00,R1

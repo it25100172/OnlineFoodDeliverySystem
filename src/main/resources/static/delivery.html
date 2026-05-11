@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Delivery Dashboard</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#f4f6f9;
+        }
+
+        .navbar{
+            background:#ff5722;
+            color:white;
+            padding:20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar button{
+            background:white;
+            color:#ff5722;
+            border:none;
+            padding:10px 20px;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:bold;
+        }
+
+        .container{
+            padding:40px;
+        }
+
+        .card{
+            background:white;
+            padding:25px;
+            border-radius:15px;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            max-width:500px;
+            margin-bottom:20px;
+        }
+
+        .card h2{
+            margin-bottom:20px;
+            color:#ff5722;
+        }
+
+        .status{
+            margin-top:15px;
+            font-weight:bold;
+            color:green;
+        }
+
+        .delivery-btn{
+
+            width:100%;
+            margin-top:20px;
+            padding:12px;
+            border:none;
+            background:#ff5722;
+            color:white;
+            border-radius:10px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .delivery-btn:hover{
+            background:#e64a19;
+        }
+
+        .message{
+
+            margin-top:20px;
+            padding:12px;
+            border-radius:10px;
+            display:none;
+            font-weight:bold;
+            background:#d4edda;
+            color:#155724;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <h1>Delivery Dashboard</h1>
+
+    <button onclick="logout()">
+        Logout
+    </button>
+
+</div>
+
+<div class="container"
+     id="deliveryContainer">
+
+</div>
+
+<script>
+
+    // GET DELIVERY USER ID
+    const urlParams =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const currentDeliveryGuy =
+        urlParams.get("userId");
+
+    console.log(
+        "CURRENT DELIVERY:",
+        currentDeliveryGuy
+    );
+
+    // LOAD ORDERS
+    fetch('/orders')
+
+        .then(response => response.json())
+
+        .then(orders => {
+
+            const container =
+                document.getElementById(
+                    'deliveryContainer'
+                );
+
+            let found = false;
+
+            orders.forEach(order => {
+
+                console.log(order);
+
+                // SAFE VALUES
+                const deliveryId =
+                    String(
+                        order.deliveryId
+                    ).trim();
+
+                const status =
+                    String(
+                        order.status
+                    ).trim();
+
+                const currentUser =
+                    String(
+                        currentDeliveryGuy
+                    ).trim();
+
+                console.log(deliveryId);
+                console.log(currentUser);
+
+                // MATCH
+                if(
+                    deliveryId == currentUser
+                    &&
+                    status == "PENDING"
+                ){
+
+                    found = true;
+
+                    container.innerHTML += `
+
+                        <div class="card"
+                             id="${order.orderId}">
+
+                            <h2>
+                                Current Delivery
+                            </h2>
+
+                            <p>
+                                Order ID :
+                                <strong>
+                                    ${order.orderId}
+                                </strong>
+                            </p>
+
+                            <br>
+
+                            <p>
+                                Customer ID :
+                                <strong>
+                                    ${order.customerId}
+                                </strong>
+                            </p>
+
+                            <br>
+
+                            <p>
+                                Food :
+                                <strong>
+                                    ${order.foodName}
+                                </strong>
+                            </p>
+
+                            <br>
+
+                            <p>
+                                Assigned Delivery :
+                                <strong>
+                                    ${order.deliveryId}
+                                </strong>
+                            </p>
+
+                            <br>
+
+                            <p>
+                                Total :
+                                <strong>
+                                    Rs. ${order.total}
+                                </strong>
+                            </p>
+
+                            <br>
+
+                            <p class="status"
+                               id="status-${order.orderId}">
+
+                                Status :
+                                ${order.status}
+
+                            </p>
+
+                            <button class="delivery-btn"
+
+                                onclick=
+                                "completeDelivery(
+                                '${order.orderId}',
+                                '${order.deliveryId}')">
+
+                                Mark As Delivered
+
+                            </button>
+
+                        </div>
+                    `;
+                }
+
+            });
+
+            // NO ORDERS
+            if(!found){
+
+                container.innerHTML = `
+
+                    <div class="card">
+
+                        <h2>
+                            No Orders Assigned
+                        </h2>
+
+                        <p>
+                            You currently have no
+                            active deliveries.
+                        </p>
+
+                    </div>
+                `;
+            }
+
+        });
+
+   // COMPLETE DELIVERY
+function completeDelivery(
+    orderId,
+    deliveryId
+){
+
+    fetch('/orders/' +
+        orderId +
+        '/DELIVERED', {
+
+        method:'PUT'
+
+    })
+
+    .then(() => {
+
+        return fetch(
+            '/delivery-complete/' +
+            deliveryId,
+
+            {
+                method:'PUT'
+            }
+        );
+
+    })
+
+    .then(() => {
+
+        // FORCE RELOAD
+        location.href =
+            window.location.href;
+
+    })
+
+    .catch(error => {
+
+        console.log(error);
+
+        // STILL RELOAD
+        location.href =
+            window.location.href;
+
+    });
+
+}
+
+    // LOGOUT
+    function logout(){
+
+        window.location.href =
+            "/login";
+    }
+
+</script>
+
+</body>
+</html>

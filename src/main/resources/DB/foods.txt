@@ -1,0 +1,7 @@
+F1,Cheese Burger,1200,R1
+F2,Pizza,2500,R1
+F3,Fried Rice,1800,R1
+F4,Coca Cola,500,R2
+F5,Chicken Submarine,1500,R2
+F6,Ice Coffee,700,R1
+F7,cheeze kottu ,900.0,R1
