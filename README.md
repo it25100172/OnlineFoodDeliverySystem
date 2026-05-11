@@ -22,8 +22,8 @@ The project responsibilities are distributed evenly among the members as follows
 | **Tharusha M.W.A.T** | **User Management** | Implementation of User registration, login, profile updates, and account deletion. |
 | **Shivakumaran B** | **Food Management** | Managing the food menu, including adding new items, updating prices, and removing dishes. |
 | **Heshan U.C.J** | **Restaurant Management** | Handling restaurant listings, opening hours, and location management. |
-| **Fonseka H.F.R.A** | **Order Management** | Processing customer orders, status updates (Pending, Delivered), and order history. |
-| **Fernando N.I.A.P** | **Cart Management** | Managing the shopping cart, adding/removing items, and calculating totals. |
+| **Fonseka H.F.R.A** | **Cart Management** | Managing the shopping cart, adding/removing items, and calculating totals. |
+| **Fernando N.I.A.P** | **Order Management** | Processing customer orders, status updates (Pending, Delivered), and order history. |
 | **Husain N.N** | **Delivery Management** | Assignment of delivery personnel and tracking delivery status. |
 
 ## 🚀 Getting Started
